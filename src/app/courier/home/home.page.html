@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title class="ion-text-center">Portal pengiriman paket</ion-title>
+  </ion-toolbar>
+
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="tambah">Tambah</ion-segment-button>
+    <ion-segment-button value="dikirim">Dikirim</ion-segment-button>
+    <ion-segment-button value="terkirim">Terkirim</ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <!-- TAMBAH -->
+  <div *ngIf="segment === 'tambah'" class="ion-padding">
+    <h3>Paket Express</h3>
+    <ion-list>
+      <ion-item *ngFor="let paket of expressPackages">
+        <ion-radio slot="start" [(ngModel)]="selectedPackage" [value]="paket.id"></ion-radio>
+        <ion-label class="custom-card" (click)="openDetail(paket)">
+          <h2 class="paket-nama">{{ paket.name }}</h2>
+          <p class="paket-alamat">{{ paket.address }}</p>
+        </ion-label>
+        <ion-note slot="end" color="medium">Belum dikirim</ion-note>
+      </ion-item>
+    </ion-list>
+
+    <h3>Paket Reguler</h3>
+    <ion-list>
+      <ion-item *ngFor="let paket of regulerPackages">
+        <ion-radio slot="start" [(ngModel)]="selectedPackage" [value]="paket.id"></ion-radio>
+        <ion-label class="custom-card" (click)="openDetail(paket)">
+          <h2 class="paket-nama">{{ paket.name }}</h2>
+          <p class="paket-alamat">{{ paket.address }}</p>
+        </ion-label>
+        <ion-note slot="end" color="medium">Belum dikirim</ion-note>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="full" class="ion-margin-top" color="dark" (click)="updateStatus()">
+      Update status
+    </ion-button>
+  </div>
+
+  <!-- DIKIRIM -->
+  <div *ngIf="segment === 'dikirim'" class="ion-padding">
+    <h3>Paket yang sedang dikirim</h3>
+    <ion-card *ngFor="let paket of expressPackages.concat(regulerPackages).slice(0,2)">
+      <ion-card-header>
+        <ion-card-title>{{ paket.name }}</ion-card-title>
+        <ion-card-subtitle>{{ paket.address }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Status: <strong>Sedang dikirim</strong>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- TERKIRIM -->
+  <div *ngIf="segment === 'terkirim'" class="ion-padding">
+    <h3>Paket yang sudah terkirim</h3>
+    <ion-card *ngFor="let paket of expressPackages.concat(regulerPackages).slice(2,4)">
+      <ion-card-header>
+        <ion-card-title>{{ paket.name }}</ion-card-title>
+        <ion-card-subtitle>{{ paket.address }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Status: <strong>Terkirim</strong>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

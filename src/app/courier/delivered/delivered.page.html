@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title class="ion-text-center">Portal pengiriman paket</ion-title>
+  </ion-toolbar>
+
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="tambah">Tambah</ion-segment-button>
+    <ion-segment-button value="dikirim">Dikirim</ion-segment-button>
+    <ion-segment-button value="terkirim">Terkirim</ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="segment === 'tambah'" class="ion-padding">
+
+    <!-- Paket Express -->
+    <h3>Paket Express</h3>
+    <ion-list>
+      <ion-item *ngFor="let paket of expressPackages">
+        <ion-radio slot="start" [(ngModel)]="selectedPackage" [value]="paket.id"></ion-radio>
+        <ion-label class="custom-card" (click)="openDetail(paket)">
+          <h2 class="paket-nama">{{ paket.name }}</h2>
+          <p class="paket-alamat">{{ paket.address }}</p>
+        </ion-label>
+        <ion-note slot="end" color="medium">Belum dikirim</ion-note>
+      </ion-item>
+    </ion-list>
+
+    <!-- Paket Reguler -->
+    <h3>Paket Reguler</h3>
+    <ion-list>
+      <ion-item *ngFor="let paket of regulerPackages">
+        <ion-radio slot="start" [(ngModel)]="selectedPackage" [value]="paket.id"></ion-radio>
+        <ion-label class="custom-card" (click)="openDetail(paket)">
+          <h2 class="paket-nama">{{ paket.name }}</h2>
+          <p class="paket-alamat">{{ paket.address }}</p>
+        </ion-label>
+        <ion-note slot="end" color="medium">Belum dikirim</ion-note>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="full" class="ion-margin-top" color="dark" (click)="updateStatus()">
+      Update status
+    </ion-button>
+  </div>
+</ion-content>
